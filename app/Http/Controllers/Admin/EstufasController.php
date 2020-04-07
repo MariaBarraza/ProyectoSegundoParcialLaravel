@@ -59,6 +59,8 @@ class EstufasController extends Controller
         $estufa->material = $request->input('material');
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
+        $estufa->id_user = $request->user()->id;
+
 
         if ($request->hasFile('imgPortada')) {
 
@@ -137,6 +139,7 @@ class EstufasController extends Controller
         $estufa->material = $request->input('material');
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
+        $estufa->id_user = $request->user()->id;
 
             if ($request->hasFile('imgPortada')) {
 

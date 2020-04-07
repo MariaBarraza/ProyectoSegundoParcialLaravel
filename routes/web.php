@@ -26,4 +26,4 @@ Route::resource('/admin/estufas', 'Admin\EstufasController');
 
 Route::resource('/admin/usuarios', 'Admin\UsuarioController');
 
-//Route::apiResource('estufas', 'EstufasApiController');
+Route::apiResource('api/estufas', 'EstufasApiController');
