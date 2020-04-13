@@ -5,7 +5,7 @@
 @section('contenido')
 
 <div class="col-lg-12">
-<a class="btn btn-primary btn-sm" style="margin-left: 11px" href="{{route('estufas.index')}}">
+<a class="btn btn-primary btn-sm" style="margin-left: 11px" href="{{route('estufasReparar.index')}}">
     <i class="fas fa-arrow-left"></i>
         Volver a lista de tareas
 </a>
@@ -45,6 +45,9 @@
                                                 <div class="col">
                                                     <div class="form-group"><label for="first_name"><strong>Estado</strong></label><input class="form-control" type="text" placeholder="{{$estufa->estado}}" name="estado" disabled></div>
                                                 </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="first_name"><strong>Materiales</strong></label><input class="form-control" type="text" placeholder="{{$estufa->material}}" name="estado" disabled></div>
+                                                </div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col">
@@ -56,10 +59,10 @@
                                             </div>
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <div class="form-group"><label for="first_name"><strong>Modelo Estufa</strong></label><input class="form-control" type="text" placeholder="{{$estufa->modelo_estufa}}" name="fecha" disabled></div>
+                                                    <div class="form-group"><label for="first_name"><strong>Pieza</strong></label><input class="form-control" type="text" placeholder="{{$estufa->pieza}}" name="fecha" disabled></div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="form-group"><label for="last_name"><strong>Precio Estufa</strong></label><input class="form-control" type="text" placeholder="{{$estufa->precio_estufa}}" name="ubicacion" disabled></div>
+                                                    <div class="form-group"><label for="last_name"><strong>Precio Pieza</strong></label><input class="form-control" type="text" placeholder="{{$estufa->precio_pieza}}" name="ubicacion" disabled></div>
                                                 </div>
                                             </div>
                                         </form>

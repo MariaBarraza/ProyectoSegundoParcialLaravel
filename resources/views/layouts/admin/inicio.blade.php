@@ -22,7 +22,8 @@
                     <hr class="sidebar-divider my-0">
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('index')}}"><i class="fas fa-binoculars"></i><span>Mostrar tareas</span></a></li>
-                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('estufas.index')}}"><i class="fas fa-book"></i><span>Agregar/Editar tareas</span></a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('estufas.index')}}"><i class="fas fa-book"></i><span>Agregar/Editar tareas Instalaciones</span></a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('estufasReparar.index')}}"><i class="fas fa-book"></i><span>Agregar/Editar tareas Reparaciones</span></a></li>
                         <li class="nav-item" role="presentation"><a class="nav-link" href="{{route('usuarios.index')}}"><i class="fas fa-user-circle"></i><span>Crear Usuario</span></a></li>
                     </ul>
                     <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>

@@ -55,11 +55,11 @@
         <div class="card-header">
 
             <h3 class="card-title">Lista de tareas</h3>
-            <a href="{{route('estufas.create')}}" class="btn btn-primary">
+            <a href="{{route('estufasReparar.create')}}" class="btn btn-primary">
              <i class="fas fa-plus"></i>Agregar Tarea
             </a>
         </div>
-
+    
         <div class="card-body">
         <form action="/search">
                 <div class="row">
@@ -86,7 +86,7 @@
             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                 <table class="table dataTable my-0" id="dataTable">
                                                 <thead>
-                                                    <tr>
+                                                <tr>
                                                         <th>Tarea</th>
                                                         
                                                         <th>Encargado</th>
@@ -105,11 +105,11 @@
                                                     <td>{{$estufa->fecha}}</td>
 
                                                     <td>
-                                                    <form method="POST" action="{{route('estufas.index', $estufa->id)}}">
-                                                        <a href="{{route('estufas.show',$estufa->id)}}" class="btn btn-primary">
+                                                    <form method="POST" action="{{route('estufasReparar.index', $estufa->id)}}">
+                                                        <a href="{{route('estufasReparar.show',$estufa->id)}}" class="btn btn-primary">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                        <a href="{{route('estufas.edit',$estufa->id)}}" class="btn btn-success">
+                                                        <a href="{{route('estufasReparar.edit',$estufa->id)}}" class="btn btn-success">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                         </a>
@@ -141,7 +141,7 @@
             function deleteData(id)
             {
                 var id = id;
-                var url = '{{ route("estufas.destroy", ":id") }}';
+                var url = '{{ route("estufasReparar.destroy", ":id") }}';
                 url = url.replace(':id', id);
                 $("#deleteForm").attr('action', url);
             }

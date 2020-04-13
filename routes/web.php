@@ -24,6 +24,14 @@ Route::get('/', 'EstufaController@index')->name('index');
 
 Route::resource('/admin/estufas', 'Admin\EstufasController');
 
+
+Route::resource('/admin/estufasReparar', 'Admin\EstufasReparacionesController');
+
 Route::resource('/admin/usuarios', 'Admin\UsuarioController');
 
-Route::apiResource('api/estufas', 'EstufasApiController');
+Route::apiResource('api/apiEstufasInstalaciones', 'EstufasApiController');
+
+Route::apiResource('api/apiEstufasReparaciones', 'EstufasApiReparacionesControllerController');
+
+Route::get('/search', 'Admin\EstufasController@search');
+Route::get('/search', 'Admin\EstufasReparacionesController@search');

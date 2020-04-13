@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 
 use App\Estufa;
 
-class EstufasApiController extends Controller
+class EstufasApiReparacionesControllerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,6 +21,7 @@ class EstufasApiController extends Controller
 
     public function index(Request $request)
     {
+       
         //Cada respuesta regresa 20 casas
 
         //solicito informacion
@@ -53,17 +53,20 @@ class EstufasApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  $estufa->tipo_tarea = $request->input('tipo_tarea');
+    {
+        $estufa->tipo_tarea = $request->input('tipo_tarea');
         $estufa->encargado = $request->input('encargado');
         $estufa->descripcion = $request->input('descripcion');
         $estufa->estado = $request->input('estado');
+        $estufa->material = $request->input('material');
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
         
         $estufa->id_user = $request->input('id_usuario');
         
-        $estufa->precio_estufa = $request->input('precio_estufa');
-        $estufa->modelo_estufa = $request->input('modelo_estufa');
+        $estufa->pieza = $request->input('pieza');
+        $estufa->precio_pieza = $request->input('precio_pieza');
+        
 
         // Arma una respuesta
         $respuesta = array();
@@ -79,10 +82,10 @@ class EstufasApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EstufasApiReparacionesController $estufasApiReparacionesController)
     {
         //
     }
@@ -91,10 +94,10 @@ class EstufasApiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EstufasApiReparacionesController $estufasApiReparacionesController)
     {
         //
     }
@@ -102,10 +105,10 @@ class EstufasApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EstufasApiReparacionesController $estufasApiReparacionesController)
     {
         //
     }

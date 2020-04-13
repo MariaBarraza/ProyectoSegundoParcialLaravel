@@ -11,6 +11,13 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input id="usertype" type="hidden" value="usuario" name="usertype" >
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

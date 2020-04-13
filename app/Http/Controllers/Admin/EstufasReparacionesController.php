@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Storage;
 
 use App\Estufa;
 
-class EstufasController extends Controller
+class EstufasReparacionesController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -24,12 +23,12 @@ class EstufasController extends Controller
     }
     public function index()
     {
-        $estufa = Estufa::wheretipo_tarea('Instalacion')->get();
+        $estufa = Estufa::wheretipo_tarea('Reparacion')->get();
 
         $argumentos = array();
         $argumentos['estufas'] = $estufa;
-
-        return view('admin.estufas.index', $argumentos); 
+    
+        return view('admin.estufasReparar.index', $argumentos); 
     }
 
     /**
@@ -39,7 +38,7 @@ class EstufasController extends Controller
      */
     public function create()    
     {
-        return view('admin.estufas.create');
+        return view('admin.estufasReparar.create');
     }
 
     /**
@@ -56,13 +55,13 @@ class EstufasController extends Controller
         $estufa->encargado = $request->input('encargado');
         $estufa->descripcion = $request->input('descripcion');
         $estufa->estado = $request->input('estado');
+        $estufa->material = $request->input('material');
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
         $estufa->id_user = $request->input('id_usuario');
         
-        
-        $estufa->precio_estufa = $request->input('precio_estufa');
-        $estufa->modelo_estufa = $request->input('modelo_estufa');
+        $estufa->pieza = $request->input('pieza');
+        $estufa->precio_pieza = $request->input('precio_pieza');
 
 
         if ($request->hasFile('imgPortada')) {
@@ -77,11 +76,11 @@ class EstufasController extends Controller
 
         if ($estufa->save()) {
 
-            return redirect()->route('estufas.index')->with('exito', '¡La tarea ha sido guardada con éxito!');
+            return redirect()->route('estufasReparar.index')->with('exito', '¡La tarea ha sido guardada con éxito!');
         }
 
         //Aqui no se pudo guardar
-        return redirect()->route('estufas.index')->with('error', 'No se pudo agregar la tarea');
+        return redirect()->route('estufasReparar.index')->with('error', 'No se pudo agregar la tarea');
     }
 
     /**
@@ -97,10 +96,10 @@ class EstufasController extends Controller
 
             $argumentos = array();
             $argumentos['estufa'] = $estufa;
-            return view('admin.estufas.show', $argumentos);
+            return view('admin.estufasReparar.show', $argumentos);
 
         }
-        return redirect()->route('admin.estufas.index')->with('error', 'No se encontró la tarea');
+        return redirect()->route('admin.estufasReparar.index')->with('error', 'No se encontró la tarea');
     }
 
     /**
@@ -117,10 +116,10 @@ class EstufasController extends Controller
 
             $argumentos = array();
             $argumentos['estufa'] = $estufa;
-            return view('admin.estufas.edit', $argumentos);
+            return view('admin.estufasReparar.edit', $argumentos);
 
         }
-        return redirect()->route('admin.estufas.index')->with('error', 'No se encontró la tarea');
+        return redirect()->route('admin.estufasReparar.index')->with('error', 'No se encontró la noticia');
     }
 
     /**
@@ -139,13 +138,14 @@ class EstufasController extends Controller
         $estufa->encargado = $request->input('encargado');
         $estufa->descripcion = $request->input('descripcion');
         $estufa->estado = $request->input('estado');
+        $estufa->material = $request->input('material');
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
         
         $estufa->id_user = $request->input('id_usuario');
         
-        $estufa->modelo_estufa = $request->input('modelo_estufa');
-        $estufa->precio_estufa = $request->input('precio_estufa');
+        $estufa->pieza = $request->input('pieza');
+        $estufa->precio_pieza = $request->input('precio_pieza');
 
 
             if ($request->hasFile('imgPortada')) {
@@ -159,15 +159,15 @@ class EstufasController extends Controller
 
             if($estufa->save()){
 
-                return redirect()->route('estufas.edit',$id)->with('exito','¡La tarea se ACTUALIZÓ exitosamente!');
+                return redirect()->route('estufasReparar.edit',$id)->with('exito','¡La tarea se ACTUALIZÓ exitosamente!');
                 
             }
             
-            return redirect()->route('estufas.edit',$id)->with('error','La tarea NO se pudo actualizar');
+            return redirect()->route('estufasReparar.edit',$id)->with('error','La tarea NO se pudo actualizar');
             
         }
 
-        return redirect()->route('estufas.index')->with('error','No se encontró la tarea');
+        return redirect()->route('estufasReparar.index')->with('error','No se encontró la tarea');
 
     }
 
@@ -184,16 +184,17 @@ class EstufasController extends Controller
 
             if($estufa->delete()){
 
-                return redirect()->route('estufas.index')->with('exito', '¡Tarea eliminada exitosamente!');
+                return redirect()->route('estufasReparar.index')->with('exito', '¡Tarea eliminada exitosamente!');
 
             }
 
-            return redirect()->route('estufas.index')->with('error', 'No se puedo eliminar la tarea');
+            return redirect()->route('estufasReparar.index')->with('error', 'No se puedo eliminar la tarea');
 
         }
 
-        return redirect()->route('estufas.index')->with('error', 'No se encontró la tarea');
+        return redirect()->route('estufasReparar.index')->with('error', 'No se encontró la tarea');
     }
+
 
     public function search(Request $request)
     {
@@ -206,14 +207,14 @@ class EstufasController extends Controller
         { 
             $estufa = Estufa::where([
                 ['fecha', 'LIKE', '%' . $search . '%'],
-                ['tipo_tarea','=','Instalacion']
+                ['tipo_tarea','=','Reparacion']
                 ])->get();
         }
         else if($filter == "estado")
         {
             $estufa = Estufa::where([
                 ['estado', 'LIKE', '%' . $search . '%'],
-                ['tipo_tarea','=','Instalacion']
+                ['tipo_tarea','=','Reparacion']
                 ])->get();
                 
         } 
@@ -221,7 +222,7 @@ class EstufasController extends Controller
         {
             $estufa = Estufa::where([
                 ['encargado', 'LIKE', '%' . $search . '%'],
-                ['tipo_tarea','=','Instalacion']
+                ['tipo_tarea','=','Reparacion']
                 ])->get();
         }
 
@@ -230,6 +231,5 @@ class EstufasController extends Controller
         $argumentos['estufas'] = $estufa;
         return view('admin.estufas.index', $argumentos);
     }
-
 
 }

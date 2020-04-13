@@ -5,7 +5,7 @@
 @section('contenido')
 
 <div class="col-lg-12">
-<a class="btn btn-primary btn-sm" style="margin-left: 11px" href="{{route('estufas.index')}}">
+<a class="btn btn-primary btn-sm" style="margin-left: 11px" href="{{route('estufasReparar.index')}}">
     <i class="fas fa-arrow-left"></i>
         Volver a lista de tareas
 </a>
@@ -28,7 +28,7 @@
                     {{Session::get('error')}}
                 </div>
             @endif
-                    <form method="POST" enctype="multipart/form-data" action="{{route('estufas.update',$estufa->id)}}">
+                    <form method="POST" enctype="multipart/form-data" action="{{route('estufasReparar.update',$estufa->id)}}">
 
                             @csrf
                             @method('PUT')
@@ -39,7 +39,7 @@
                                                     <div class="form-group">
                                                     <label for="email"><strong>Tipo tarea</strong></label>
                                                     <select name="tipo_tarea" class="form-control" data-toggle="dropdown" aria-expanded="false">
-                                                        <option value="Instalacion" class="dropdown-item" role="presentation">Instalacion</option>
+                                                        <option value="Reparacion" class="dropdown-item" role="presentation">Reparación</option>
                                                        
                                                 </select>
                                                 </div>
@@ -60,6 +60,9 @@
                                                 <div class="col">
                                                     <div class="form-group"><label for="first_name"><strong>Estado</strong></label><input class="form-control" type="text" value="{{$estufa->estado}}" name="estado" ></div>
                                                 </div>
+                                                <div class="col">
+                                                    <div class="form-group"><label for="last_name"><strong>Material</strong></label><input class="form-control" type="text" value="{{$estufa->material}}" name="material" ></div>
+                                                </div>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col">
@@ -76,15 +79,15 @@
                                                 @endif
                                             </div>
                                             <div class="form-row">
+                                              
                                                 <div class="col">
-                                                    <div class="form-group"><label for="last_name"><strong>Precio estufa</strong></label><input type="text"  value="{{$estufa->precio_estufa}}" name="precio_estufa" class="form-control" /></div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="form-group"><label for="last_name"><strong>Modelo estufa</strong></label><input type="text"  value="{{$estufa->modelo_estufa}}" name="modelo_estufa" class="form-control" /></div>
+                                                    <div class="form-group"><label for="last_name"><strong>Pieza</strong></label><input type="text" name="pieza" value="{{$estufa->pieza}}" class="form-control" /></div>
                                                 </div>
                                             </div>
                                             <div class="form-row">
-                                               
+                                                <div class="col">
+                                                    <div class="form-group"><label for="last_name"><strong>Precio Pieza</strong></label><input type="text" value="{{$estufa->precio_pieza}}" name="precio_pieza" class="form-control"/></div>
+                                                </div>
                                                 <div class="col">
                                                     <div class="form-group"><label for="last_name"><strong>Id encargado</strong></label><input type="text"  value="{{$estufa->id_user}}" name="id_usuario" class="form-control"/></div>
                                                 </div>
