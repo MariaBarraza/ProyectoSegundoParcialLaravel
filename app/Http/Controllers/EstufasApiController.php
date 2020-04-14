@@ -33,7 +33,13 @@ class EstufasApiController extends Controller
 
         $numeroEstufas = Estufa::count();
         $numeroPaginas = ceil($numeroEstufas / 20);
-        $estufas = Estufa::where('id_user',$request->user()->id)->skip(($paginaActual - 1) * 20)->take(20)->get();
+
+        $estufas = Estufa::where([
+            ['id_user','=',$request->user()->id],
+            ['tipo_tarea','=','Instalacion']
+            ])->skip(($paginaActual - 1) * 20)->take(20)->get();
+
+
     
         //Construyo respuesta
         $respuesta = array();
@@ -53,7 +59,9 @@ class EstufasApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  $estufa->tipo_tarea = $request->input('tipo_tarea');
+    { 
+        $estufa = new Estufa();
+        $estufa->tipo_tarea = 'Instalacion';
         $estufa->encargado = $request->input('encargado');
         $estufa->descripcion = $request->input('descripcion');
         $estufa->estado = $request->input('estado');
@@ -68,7 +76,7 @@ class EstufasApiController extends Controller
         // Arma una respuesta
         $respuesta = array();
         $respuesta['exito'] = false;
-        if($nuevaInstalacion -> save()){
+        if($estufa -> save()){
             $respuesta['exito'] = true;
         }
 
@@ -84,7 +92,14 @@ class EstufasApiController extends Controller
      */
     public function show($id)
     {
-        //
+        $estufa = Estufa::find($id);
+        if($estufa){
+
+            $respuesta = array();
+            $respuesta['estufa'] = $estufa;
+        }else
+        $respuesta['estufa']= "no se encontro la tarea";
+        return $respuesta;
     }
 
     /**
@@ -96,7 +111,34 @@ class EstufasApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $estufa = Estufa::find($id);
+        if($estufa){
+
+        $estufa->encargado = $request->input('encargado');
+        $estufa->descripcion = $request->input('descripcion');
+        $estufa->estado = $request->input('estado');
+        $estufa->fecha = $request->input('fecha');
+        $estufa->ubicacion = $request->input('ubicacion');
+        
+        $estufa->id_user = $request->input('id_usuario');
+        
+        $estufa->modelo_estufa = $request->input('modelo_estufa');
+        $estufa->precio_estufa = $request->input('precio_estufa');
+
+
+            if($estufa->save()){
+
+                $respuesta = array();
+               return $respuesta['estufa'] = $estufa;
+                
+            }
+            
+            $respuesta = array();
+          return  $respuesta['estufa'] = "no se pudo guardar la tarea";
+            
+        }
+        $respuesta = array();
+       return  $respuesta['estufa'] = "no se pudo guardar la tarea";
     }
 
     /**
@@ -108,5 +150,47 @@ class EstufasApiController extends Controller
     public function destroy($id)
     {
         //
+    }
+     /**
+     * Display a list of items depending on the search criteria.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        // Search terms
+        $filter = $request -> input('filtro');
+        $search = $request -> input('fecha');
+
+        // Retrieval of the data according to the search terms
+        if($filter == "pendientes" || $filter == "Pendientes" || $filter == "pendiente" || $filter == "Pendiente")
+        {
+            $estufas = Estufa::where([
+                ['id_user','=', $request->user()->id],
+                ['estado','=', 'Pendiente'],
+                ['fecha', 'LIKE',  '%' . $search . '%'],
+                ['tipo_tarea','=','Instalacion']
+                ])->get();
+        }
+        else if($filter == "terminadas" || $filter == "Terminadas" || $filter == "terminado" || $filter == "Terminado")
+        {
+            $estufas = Estufa::where([
+                ['id_user','=', $request->user()->id],
+                ['estado','=', 'Terminado'],
+                ['fecha', 'LIKE',  '%' . $search . '%'],
+                ['tipo_tarea','=','Instalacion']
+                ])->get();
+        } else 
+        {
+            return "No se encontró ningun registro";
+        }
+
+        
+        // Construyo respuesta
+        $respuesta = array();
+        $respuesta['estufas'] = $estufas;
+
+        // Envió respuesta
+        return $respuesta;
     }
 }

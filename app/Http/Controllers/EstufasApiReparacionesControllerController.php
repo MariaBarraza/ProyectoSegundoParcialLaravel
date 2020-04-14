@@ -22,7 +22,7 @@ class EstufasApiReparacionesControllerController extends Controller
     public function index(Request $request)
     {
        
-        //Cada respuesta regresa 20 casas
+      //Cada respuesta regresa 20 tareas
 
         //solicito informacion
         $paginaActual = intval($request->input('pagina'));
@@ -33,7 +33,13 @@ class EstufasApiReparacionesControllerController extends Controller
 
         $numeroEstufas = Estufa::count();
         $numeroPaginas = ceil($numeroEstufas / 20);
-        $estufas = Estufa::where('id_user',$request->user()->id)->skip(($paginaActual - 1) * 20)->take(20)->get();
+
+        $estufas = Estufa::where([
+            ['id_user','=',$request->user()->id],
+            ['tipo_tarea','=','Reparacion']
+            ])->skip(($paginaActual - 1) * 20)->take(20)->get();
+
+
     
         //Construyo respuesta
         $respuesta = array();
@@ -54,7 +60,9 @@ class EstufasApiReparacionesControllerController extends Controller
      */
     public function store(Request $request)
     {
-        $estufa->tipo_tarea = $request->input('tipo_tarea');
+
+        $estufa = new Estufa();
+        $estufa->tipo_tarea = 'Reparacion';
         $estufa->encargado = $request->input('encargado');
         $estufa->descripcion = $request->input('descripcion');
         $estufa->estado = $request->input('estado');
@@ -71,7 +79,7 @@ class EstufasApiReparacionesControllerController extends Controller
         // Arma una respuesta
         $respuesta = array();
         $respuesta['exito'] = false;
-        if($nuevaInstalacion -> save()){
+        if($estufa -> save()){
             $respuesta['exito'] = true;
         }
 
@@ -85,9 +93,16 @@ class EstufasApiReparacionesControllerController extends Controller
      * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function show(EstufasApiReparacionesController $estufasApiReparacionesController)
+    public function show($id)
     {
-        //
+        $estufa = Estufa::find($id);
+        if($estufa){
+
+            $respuesta = array();
+            $respuesta['estufa'] = $estufa;
+        }else
+        $respuesta['estufa']= "no se encontro la tarea";
+        return $respuesta;
     }
 
     /**
@@ -97,9 +112,37 @@ class EstufasApiReparacionesControllerController extends Controller
      * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EstufasApiReparacionesController $estufasApiReparacionesController)
+    public function update(Request $request, $id)
     {
-        //
+        $estufa = Estufa::find($id);
+        if($estufa){
+
+            $estufa->encargado = $request->input('encargado');
+            $estufa->descripcion = $request->input('descripcion');
+            $estufa->estado = $request->input('estado');
+            $estufa->material = $request->input('material');
+            $estufa->fecha = $request->input('fecha');
+            $estufa->ubicacion = $request->input('ubicacion');
+            
+            $estufa->id_user = $request->input('id_usuario');
+            
+            $estufa->pieza = $request->input('pieza');
+            $estufa->precio_pieza = $request->input('precio_pieza');
+
+
+            if($estufa->save()){
+
+               $respuesta = array();
+               return $respuesta['estufa'] = $estufa;
+                
+            }
+            
+            $respuesta = array();
+          return  $respuesta['estufa'] = "no se pudo guardar la tarea";
+            
+        }
+        $respuesta = array();
+       return  $respuesta['estufa'] = "no se pudo guardar la tarea";
     }
 
     /**
@@ -108,8 +151,50 @@ class EstufasApiReparacionesControllerController extends Controller
      * @param  \App\EstufasApiReparacionesController  $estufasApiReparacionesController
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EstufasApiReparacionesController $estufasApiReparacionesController)
+    public function destroy($id)
     {
         //
+    }
+        /**
+     * Display a list of items depending on the search criteria.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        // Search terms
+        $filter = $request -> input('filtro');
+        $search = $request -> input('fecha');
+
+        // Retrieval of the data according to the search terms
+        if($filter == "pendientes" || $filter == "Pendientes" || $filter == "pendiente" || $filter == "Pendiente")
+        {
+            $estufas = Estufa::where([
+                ['id_user','=', $request->user()->id],
+                ['estado','=', 'Pendiente'],
+                ['fecha', 'LIKE',  '%' . $search . '%'],
+                ['tipo_tarea','=','Reparacion']
+                ])->get();
+        }
+        else if($filter == "terminadas" || $filter == "Terminadas" || $filter == "terminado" || $filter == "Terminado")
+        {
+            $estufas = Estufa::where([
+                ['id_user','=', $request->user()->id],
+                ['estado','=', 'Terminado'],
+                ['fecha', 'LIKE',  '%' . $search . '%'],
+                ['tipo_tarea','=','Reparacion']
+                ])->get();
+        } else 
+        {
+            return "No se encontró ningun registro";
+        }
+
+        
+        // Construyo respuesta
+        $respuesta = array();
+        $respuesta['estufas'] = $estufas;
+
+        // Envió respuesta
+        return $respuesta;
     }
 }
