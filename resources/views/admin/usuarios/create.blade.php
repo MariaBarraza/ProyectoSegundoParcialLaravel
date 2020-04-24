@@ -49,7 +49,10 @@
                                             </div>
                                             <div class="form-row">
                                             <div class="col">
-                                                    <div class="form-group"><label for="email"><strong>Tipo usuario</strong></label><input class="form-control" type="text" placeholder="tipo" name="tipo"  ></div>
+                                                    <div class="form-group"><label for="email"><strong>Tipo usuario</strong></label> <select name="tipo" class="form-control" data-toggle="dropdown" aria-expanded="false">
+                        <option value="Administrador" class="dropdown-item" role="presentation">Administrador</option>
+                        <option value="Usuario" class="dropdown-item" role="presentation">Usuario</option>
+                    </select></div>
                                                 </div>
                                                 
                                             </div>

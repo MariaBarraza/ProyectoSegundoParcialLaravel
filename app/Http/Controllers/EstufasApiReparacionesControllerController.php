@@ -70,6 +70,15 @@ class EstufasApiReparacionesControllerController extends Controller
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
         
+        if ($request->hasFile('imgPortada')) {
+
+            $archivoPortada = $request->file('imgPortada');
+            $rutaArchivo = $archivoPortada->store('public/portadas');
+            $rutaArchivo = substr($rutaArchivo, 16);
+            $estufa->foto_resultado = $rutaArchivo;
+
+        }
+        
         $estufa->id_user = $request->input('id_usuario');
         
         $estufa->pieza = $request->input('pieza');
@@ -124,7 +133,15 @@ class EstufasApiReparacionesControllerController extends Controller
             $estufa->fecha = $request->input('fecha');
             $estufa->ubicacion = $request->input('ubicacion');
             
-            $estufa->id_user = $request->input('id_usuario');
+            if ($request->hasFile('imgPortada')) {
+
+                $archivoPortada = $request->file('imgPortada');
+                $rutaArchivo = $archivoPortada->store('public/portadas');
+                $rutaArchivo = substr($rutaArchivo, 16);
+                $estufa->foto_resultado = $rutaArchivo;
+    
+            }
+
             
             $estufa->pieza = $request->input('pieza');
             $estufa->precio_pieza = $request->input('precio_pieza');

@@ -70,18 +70,26 @@ class EstufasApiController extends Controller
         
         $estufa->id_user = $request->input('id_usuario');
         
+        if ($request->hasFile('imgPortada')) {
+
+            $archivoPortada = $request->file('imgPortada');
+            $rutaArchivo = $archivoPortada->store('public/portadas');
+            $rutaArchivo = substr($rutaArchivo, 16);
+            $estufa->foto_resultado = $rutaArchivo;
+
+        }
         $estufa->precio_estufa = $request->input('precio_estufa');
         $estufa->modelo_estufa = $request->input('modelo_estufa');
 
-        // Arma una respuesta
-        $respuesta = array();
-        $respuesta['exito'] = false;
-        if($estufa -> save()){
-            $respuesta['exito'] = true;
-        }
+            // Arma una respuesta
+            $respuesta = array();
+            $respuesta['exito'] = false;
+            if($estufa -> save()){
+                $respuesta['exito'] = true;
+            }
 
-        // Regresa una respuesta
-        return $respuesta;
+            // Regresa una respuesta
+            return $respuesta;
     }
 
     /**
@@ -120,7 +128,15 @@ class EstufasApiController extends Controller
         $estufa->fecha = $request->input('fecha');
         $estufa->ubicacion = $request->input('ubicacion');
         
-        $estufa->id_user = $request->input('id_usuario');
+        if ($request->hasFile('imgPortada')) {
+
+            $archivoPortada = $request->file('imgPortada');
+            $rutaArchivo = $archivoPortada->store('public/portadas');
+            $rutaArchivo = substr($rutaArchivo, 16);
+            $estufa->foto_resultado = $rutaArchivo;
+
+        }
+
         
         $estufa->modelo_estufa = $request->input('modelo_estufa');
         $estufa->precio_estufa = $request->input('precio_estufa');

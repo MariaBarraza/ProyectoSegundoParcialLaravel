@@ -49,7 +49,16 @@
                                             </div>
                                             <div class="form-row">
                                             <div class="col">
-                                                    <div class="form-group"><label for="email"><strong>Tipo usuario</strong></label><input class="form-control" type="text" value="{{$usuario->tipo}}" name="tipo"  ></div>
+                                                    <div class="form-group"><label for="email"><strong>Tipo usuario</strong></label> <select name="tipo" class="form-control" data-toggle="dropdown" aria-expanded="false">
+                        <option value="{{ $usuario -> tipo }}" class="dropdown-item" role="presentation">{{ $usuario -> tipo }}</option>
+
+                        @if($usuario->tipo == "Administrador")
+                        <option value="Usuario" class="dropdown-item" role="presentation">Usuario</option>
+                        @else
+                        <option value="Administrador" class="dropdown-item" role="presentation">Administrador</option>
+                        @endif
+
+                    </select></div>
                                                 </div>
                                                 
                                             </div>

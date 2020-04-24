@@ -27,3 +27,13 @@ Route::apiResource('apiEstufasReparaciones', 'EstufasApiReparacionesControllerCo
 
 Route::get('/searchApiInstalaciones', 'EstufasApiController@search');
 Route::get('/searchApiReparaciones', 'EstufasApiReparacionesControllerController@search');
+
+Route::middleware('auth:api','trabajadorApi')->get('/servicio',
+    function (Request $request) {
+        return ['mensaje' => 'Hola trabajador'];
+    });
+
+Route::get('/soloTrabajadores',
+    function() {
+        return ["mensaje" => "Este servicio es solo para trabajadores"];
+    })->name('api.soloTrabajadores');
