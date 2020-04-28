@@ -20,7 +20,7 @@
                                         <form>
                                             <center>
                                         <div class="col-lg-3">
-                                        <div class="card-body text-center shadow"><img class="" src="/storage/assets/portadas/{{$estufa->foto_resultado}}" width="160" height="160">
+                                        <div class="card-body text-center shadow"><img class="" src="/storage/portadas/{{$estufa->foto_resultado}}" width="160" height="160">
                             
                                         </div>
                                     </div>

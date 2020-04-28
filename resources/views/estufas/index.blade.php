@@ -34,7 +34,8 @@
                                     <td>{{$estufa->material}}</td>
                                     <td>{{$estufa->fecha}}</td>
                                     <td>{{$estufa->ubicacion}}</td>
-                                    <td>{{$estufa->foto_resultado}}</td>
+                                    <td><a href="/storage/portadas/{{$estufa->foto_resultado}}" target="_blank">
+                                <img style="width: 50px; heigh: auto;" src="/storage/portadas/{{$estufa->foto_resultado}}" /></td>
                                 </tr>
                                 @endforeach
                                 </tbody>
