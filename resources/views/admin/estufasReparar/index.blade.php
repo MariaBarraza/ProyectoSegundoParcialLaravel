@@ -8,7 +8,7 @@
 <!-- Modal -->
 <div id="DeleteModal" class="modal fade text-danger" role="dialog">
     <div class="modal-dialog ">
-      <!-- Modal content-->
+      <!-- Modal c/ontent-->
       <form action="" id="deleteForm" method="post">
           <div class="modal-content">
               <div class="modal-header bg-danger">
